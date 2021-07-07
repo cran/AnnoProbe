@@ -42,7 +42,7 @@ annoGene <- function(IDs,ID_type,species='human',out_file){
   missIds <- IDs[!(IDs %in% eval(parse(text=paste0("res$",ID_type))))]
   missIdsPercentage = round((length(missIds)/length(IDs))*100,2)
   if(length(missIds)!=0){
-    stop(
+    warning(
       paste0(missIdsPercentage ,"% of input IDs are fail to annotate... ")
       # example: 5.29% of input gene IDs are fail to map...
     )
