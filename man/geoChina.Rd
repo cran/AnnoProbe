@@ -4,10 +4,10 @@
 \alias{geoChina}
 \title{Download expression dataset by GSE id}
 \usage{
-geoChina(gse = "GSE2546", mirror = "tencent", destdir = tempdir())
+geoChina(gse = "GSE2546", mirror = "tencent", destdir = getwd())
 }
 \arguments{
-\item{gse}{input GSE id, such as GSE1009, GSE2546, default:GSE2546.}
+\item{gse}{input GSE id, such as GSE1009, GSE2546, gse1009.}
 
 \item{mirror}{"tencent" only for now.}
 
@@ -24,6 +24,6 @@ a list of ExpressionSet, which contains the  expression matrix and phenotype dat
 }
 \examples{
 \dontrun{
-geoChina('GSE1009')
+geoChina('GSE1009',destdir=tempdir())
 }
 }

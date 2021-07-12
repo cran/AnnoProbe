@@ -4,7 +4,7 @@
 \alias{idmap}
 \title{Get Probe Annotation}
 \usage{
-idmap(gpl = "GPL570", type = "bioc", mirror = "tencent", destdir = tempdir())
+idmap(gpl = "GPL570", type = "bioc", mirror = "tencent", destdir = getwd())
 }
 \arguments{
 \item{gpl}{GPL(GEO platform) number, eg: GPL570}
@@ -22,9 +22,9 @@ probe annotaions
 \code{idmap} returns probe annotations for input gpl
 }
 \examples{
-ids=idmap('GPL570')
+ids=idmap('GPL570',destdir=tempdir())
 \donttest{
-ids=idmap('GPL570',type='soft')
-ids=idmap('GPL18084',type='pipe')
+ids=idmap('GPL570',type='soft',destdir=tempdir())
+ids=idmap('GPL18084',type='pipe',destdir=tempdir())
 }
 }

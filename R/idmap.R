@@ -8,21 +8,21 @@
 ##' @return probe annotaions
 ##' @importFrom utils download.file data
 ##' @examples
-##' ids=idmap('GPL570')
+##' ids=idmap('GPL570',destdir=tempdir())
 ##' \donttest{
-##' ids=idmap('GPL570',type='soft')
-##' ids=idmap('GPL18084',type='pipe')
+##' ids=idmap('GPL570',type='soft',destdir=tempdir())
+##' ids=idmap('GPL18084',type='pipe',destdir=tempdir())
 ##' }
 ##' @export
 ##'
-idmap <- function(gpl='GPL570',type='bioc',mirror='tencent',destdir=tempdir()){
+idmap <- function(gpl='GPL570',type='bioc',mirror='tencent',destdir=getwd()){
   gpl=toupper(gpl)
   gpl_anno=paste(gpl,c('bioc','soft','pipe'),sep='_')
   if(mirror=='tencent'){
     up='http://49.235.27.111'
   }
   if(!checkGPL(gpl)){
-    message("This platform is not in our list, please use our shinyAPP to custom annotate your probe sequences, or ask us to process and then update the R package!")
+    stop("This platform is not in our list, please use our shinyAPP to custom annotate your probe sequences, or ask us to process and then update the R package!")
   }else{
     tryCatch("exists_anno_list")
     gpl_anno=gpl_anno [gpl_anno %in% exists_anno_list]
@@ -34,9 +34,9 @@ idmap <- function(gpl='GPL570',type='bioc',mirror='tencent',destdir=tempdir()){
       OS <- .Platform$OS.type
 
       if (OS == "unix"){
-        dt = paste0( tempdir(),"/", tpf) # MAC file path
+        dt = paste0( destdir,"/", tpf) # MAC file path
       } else if (OS == "windows"){
-        dt = paste0( tempdir(),"\\", tpf) # windows file path
+        dt = paste0( destdir,"\\", tpf) # windows file path
       } else {
         stop("ERROR: OS could not be identified")
       }
@@ -44,10 +44,11 @@ idmap <- function(gpl='GPL570',type='bioc',mirror='tencent',destdir=tempdir()){
 
       down=paste0('/GEOmirror/GPL/',tpf)
       download.file(paste0(up,down),dt,mode = "wb")
+      message(paste0("file downloaded in ",destdir))
       load(dt)
       return(get(paste(gpl, type,sep='_')))
     }else{
-      message('We have that platform, but just offer other type of annotaion.')
+      stop('We have that platform, but just offer other type of annotaion.')
     }
   }
 
@@ -64,7 +65,7 @@ idmap <- function(gpl='GPL570',type='bioc',mirror='tencent',destdir=tempdir()){
 ##' @export
 checkGPL <- function(GPL=NULL){
   if(length(GPL)==0){
-    message("please input GPL number")
+    stop("please input GPL number")
   }
   GPLList <- getGPLList()
   flag = (GPL %in% GPLList[,1])

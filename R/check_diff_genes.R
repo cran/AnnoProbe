@@ -36,7 +36,7 @@ check_diff_genes <- function(gene,genes_expr,group_list ){
   }else{
     cg=gene
     cg=cg[cg %in%  rownames(genes_expr) ]
-    message(paste0('Only ',length(cg),' in ',length(gene),' genes are in your expression matrix'))
+    warning(paste0('Only ',length(cg),' in ',length(gene),' genes are in your expression matrix'))
     if(length(cg)<1){
       stop('None of the gene in your expression matrix')
     }
